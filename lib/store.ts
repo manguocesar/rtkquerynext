@@ -1,10 +1,16 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit";
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
 import { counterSlice } from "./features/counter/counterSlice";
+import { addListSlice } from "./features/addList/addListSlice";
 import { quotesApiSlice } from "./features/quotes/quotesApiSlice";
 import { postsApiSlice } from "./features/posts/postsApiSlice";
 
-const rootReducer = combineSlices(counterSlice, quotesApiSlice, postsApiSlice);
+const rootReducer = combineSlices(
+  counterSlice,
+  addListSlice,
+  quotesApiSlice,
+  postsApiSlice
+);
 // Infer the `RootState` type from the root reducer
 export type RootState = ReturnType<typeof rootReducer>;
 
@@ -19,8 +25,8 @@ export const makeStore = () => {
     // and other useful features of `rtk-query`.
     middleware: (getDefaultMiddleware) => {
       return getDefaultMiddleware()
-      .concat(quotesApiSlice.middleware)
-      .concat(postsApiSlice.middleware);
+        .concat(quotesApiSlice.middleware)
+        .concat(postsApiSlice.middleware);
     },
   });
 };
