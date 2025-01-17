@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import {
-  addToList, selectAddList, selectStatus
+  addToList, rmToList, selectAddList, selectStatus
 } from "@/lib/features/addList/addListSlice";
 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
@@ -17,66 +17,35 @@ export const AddList = () => {
 
   // const incrementValue = Number(incrementAmount) || 0;
 
-  console.log("addlist", addlist);
+  const addText = (text: string) => {
+    dispatch(addToList({ text, id: Math.floor(Math.random() * 100) }))
+  }
 
+  const rmText = (id: number) => {
+    dispatch(rmToList(id))
+  }
 
   return (
     <div>
       <div className={styles.row}>
         <input placeholder="New text to add.." className={styles.button} value={textToSend}
           type="text" onChange={(e) => setTextToSend(e.target.value)} />
-        <button onClick={() => dispatch(addToList(textToSend))} >
+        <button onClick={() => addText(textToSend)} >
           Add to List
-          </button>
-
+        </button>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           {addlist.map((list, id) => (
-            <p key={id} aria-label="Count" className={styles.value}>
-              {list}
-            </p>
+            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }} key={list.id}>
+              <p aria-label="Count" className={styles.value}>
+                {list.text}
+              </p>
+              <button style={{ height: '30px', borderRadius: '10px' }} onClick={() => rmText(list.id)} >
+                X
+              </button>
+            </div>
           )
-
           )}
         </div>
-        {/* <button
-          className={styles.button}
-          aria-label="Increment value"
-          onClick={() => dispatch(increment())}
-        > 
-          +
-        </button>
-      </div>
-      <div className={styles.row}>
-        <input
-          className={styles.textbox}
-          aria-label="Set increment amount"
-          value={incrementAmount}
-          type="number"
-          onChange={(e) => {
-            setIncrementAmount(e.target.value);
-          }}
-        />
-        <button
-          className={styles.button}
-          onClick={() => dispatch(incrementByAmount(incrementValue))}
-        >
-          Add Amount
-        </button>
-        <button
-          className={styles.asyncButton}
-          disabled={status !== "idle"}
-          onClick={() => dispatch(incrementAsync(incrementValue))}
-        >
-          Add Async
-        </button>
-        <button
-          className={styles.button}
-          onClick={() => {
-            dispatch(incrementIfOdd(incrementValue));
-          }}
-        >
-          Add If Odd
-        </button>*/}
       </div>
     </div>
   );

@@ -3,12 +3,18 @@ import type { AppThunk } from "@/lib/store";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface AddListSliceState {
-  value: string[];
+  value:  Text[] 
   status: "idle" | "loading" | "failed";
 }
 
+type Text = {
+  text: string, id: number}
+
 const initialState: AddListSliceState = {
-  value: ["tttte", "rrr"],
+  value: [
+    {text: "ex 1", id: 1},
+    {text: "ex 2", id: 2},
+    ],
   status: "idle",
 };
 
@@ -19,12 +25,16 @@ export const addListSlice = createAppSlice({
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: (create) => ({
-    addToList: create.reducer((state,action: PayloadAction<string>) => {
+    addToList: create.reducer((state,action: PayloadAction<Text>) => {
+      state.value.push(action.payload);
+    }),
+    rmToList: create.reducer((state, action: PayloadAction<number>) => {
       // Redux Toolkit allows us to write "mutating" logic in reducers. It
       // doesn't actually mutate the state because it uses the Immer library,
       // which detects changes to a "draft state" and produces a brand new
       // immutable state based off those changes
-      state.value.push(action.payload);
+      
+      state.value = state.value.filter((element) => element.id !== action.payload);
     }),
     // decrement: create.reducer((state) => {
     //   state.value -= 1;
@@ -44,13 +54,13 @@ export const addListSlice = createAppSlice({
   // You can define your selectors here. These selectors receive the slice
   // state as their first argument.
   selectors: {
-    selectAddList: (counter) => counter.value,
-    selectStatus: (counter) => counter.status,
+    selectAddList: (addList) => addList.value,
+    selectStatus: (addList) => addList.status,
   },
 });
 
 // Action creators are generated for each case reducer function.
-export const { addToList } =
+export const { addToList, rmToList } =
 addListSlice.actions;
 
 // Selectors returned by `slice.selectors` take the root state as their first argument.
