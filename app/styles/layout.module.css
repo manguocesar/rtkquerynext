@@ -40,7 +40,9 @@
   grid-area: nav;
   display: flex;
   align-items: center;
-  justify-content: center;
+  width: 60%;
+  margin: auto;
+  justify-content: space-evenly;
   gap: 8px;
   padding: 8px;
   font-size: calc(10px + 2vmin);
