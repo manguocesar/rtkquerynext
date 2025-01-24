@@ -15,7 +15,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import styles from "./Counter.module.css";
 
-export const Counter = () => {
+const Page = () => {
   const dispatch = useAppDispatch();
   const count = useAppSelector(selectCount);
   const status = useAppSelector(selectStatus);
@@ -79,3 +79,5 @@ export const Counter = () => {
     </div>
   );
 };
+
+export default Page;
