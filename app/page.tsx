@@ -15,6 +15,3 @@ export default async function Page({ children }: { children: React.ReactNode }) 
     </div>)
 }
 
-export const metadata: Metadata = {
-  title: "Redux Toolkit",
-};

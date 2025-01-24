@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import { useGetCountriesQuery } from "../../lib/features/countries/countriesApiSlice";
+import { useGetCountriesQuery } from "../../lib/features/countries/CountriesApiSlic";
+
 import styles from "./Countries.module.css";
 import Link from "next/link";
 
@@ -16,7 +17,9 @@ interface Country {
 
 export const Countries = () => {
   const [numberOfCountries, setNumberOfCountries] = useState(10);
-  // Using a query hook automatically fetches data and returns query values
+ 
+  // Any component that interacts with the Redux store 
+  // needs to be a client component
   const { data, isError, isLoading, isSuccess } =
     useGetCountriesQuery(numberOfCountries);
 
@@ -36,7 +39,7 @@ export const Countries = () => {
     );
   }
 
-  let countries = data.slice(0, numberOfCountries)
+  let countries = data?.slice(0, numberOfCountries)
 
 
   if (isSuccess) {
@@ -58,7 +61,7 @@ export const Countries = () => {
         </select>
         <div>
 
-          {countries.map(({ name, flags, id }: Country) => (
+          {countries && countries.map(({ name }: Country) => (
             <div key={name.common}>
               <li>
                 <Link href={`/countries/${name.common}`}>
