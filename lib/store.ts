@@ -4,14 +4,16 @@ import { counterSlice } from "./features/counter/counterSlice";
 import { addListSlice } from "./features/addList/addListSlice";
 import { quotesApiSlice } from "./features/quotes/quotesApiSlice";
 import { postsApiSlice } from "./features/posts/postsApiSlice";
+import { countriesApiSlice } from "./features/countries/CountriesApiSlice";
 
 const rootReducer = combineSlices(
   counterSlice,
   addListSlice,
   quotesApiSlice,
-  postsApiSlice
+  postsApiSlice,
+  countriesApiSlice
 );
-// Infer the `RootState` type from the root reducer
+
 export type RootState = ReturnType<typeof rootReducer>;
 
 // `makeStore` encapsulates the store configuration to allow
@@ -26,7 +28,8 @@ export const makeStore = () => {
     middleware: (getDefaultMiddleware) => {
       return getDefaultMiddleware()
         .concat(quotesApiSlice.middleware)
-        .concat(postsApiSlice.middleware);
+        .concat(postsApiSlice.middleware)
+        .concat(countriesApiSlice.middleware);
     },
   });
 };

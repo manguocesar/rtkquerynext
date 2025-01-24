@@ -1,4 +1,4 @@
-import { AddList } from "../components/addList/AddList";
+import { AddList } from "../../components/addList/AddList";
 
 export default function VerifyPage() {
   return (
